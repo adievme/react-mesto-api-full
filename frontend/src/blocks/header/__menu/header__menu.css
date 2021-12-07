@@ -1,0 +1,19 @@
+.header__menu {
+  display: none;
+  background: url(../../../images/burger-menu.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 20px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+@media screen and (max-width: 425px) {
+  .header__menu {
+    display: block;
+    margin-right: 27px;
+  }
+}

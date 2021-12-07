@@ -1,0 +1,8 @@
+.input_type_popup {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.input_type_popup:focus {
+  border-color: #000;
+  outline: none;
+}

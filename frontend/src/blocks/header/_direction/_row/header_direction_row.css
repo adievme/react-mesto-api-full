@@ -1,0 +1,14 @@
+/* при ширине экрана <425px и в авторизованном состоянии
+выключаем флекс-контейнер у header, 
+т.к в этот момент используется флекс у header__container */
+.header_direction_row {
+  display: block;
+}
+
+@media screen and (min-width: 425px) {
+  .header_direction_row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
