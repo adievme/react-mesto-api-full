@@ -1,6 +1,0 @@
-@media screen and (max-width: 425px) {
-  .header_direction_column-reverse {
-    display: flex;
-    flex-direction: column-reverse;
-  }
-}
