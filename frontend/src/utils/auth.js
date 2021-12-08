@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'https://api.mesto.adievme.nomoredomains.rocks';
 
 const checkResponse = (res) => {
   // для ошибок 400 или 401 тоже возвращаем json для показа попапа с ошибкой 
