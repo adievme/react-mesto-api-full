@@ -17,19 +17,19 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    default: 'Безымянный',
+    default: 'Как Вас зовут?',
     minlength: 2,
     maxlength: 30,
   },
   about: {
     type: String,
-    default: 'Безработный',
+    default: 'Чем вы занимаетесь?',
     minlength: 2,
     maxlength: 30,
   },
   avatar: {
     type: String,
-    default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
+    default: 'https://thumbs.dreamstime.com/b/vector-illustration-isolated-white-background-user-profile-avatar-black-line-icon-user-profile-avatar-black-line-icon-121102131.jpg',
   },
 });
 
