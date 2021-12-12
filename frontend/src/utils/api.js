@@ -61,7 +61,7 @@ class Api {
   }
 
   like(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}cards/${id}/likes`, {
       method: 'PUT',
       headers: this._headers
     })
@@ -69,7 +69,7 @@ class Api {
   }
 
   dislike(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}cards/${id}/likes`, {
       method: 'DELETE',
       headers: this._headers
     })
@@ -82,10 +82,10 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-23/',
+  baseUrl: 'https://api.mesto.adievme.nomoredomains.rocks/',
   headers: {
-    authorization: '84fbe532-8273-42b1-9e94-975939efca47',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.jwt}`,
   }
 }); 
 

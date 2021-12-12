@@ -4,7 +4,6 @@ import logo from '../images/logo.svg';
 import '../index.css';
 
 function Header({ userEmail, onSignOut, onMenuClick, isMenuClick, loggedIn }) {
-
   // Показать email и кнопку выхода при нажатии на иконку бургера
   const userContentClassName = (
     `header__user-content ${isMenuClick && `header__user-content_active`}`

@@ -37,7 +37,7 @@ function App() {
 
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     if (!isLiked) {
       api.like(card._id)
@@ -108,6 +108,7 @@ function App() {
   }
   
   const [cardId, setCardId] = useState('')
+  
   // Открыть попап удаления карточки и обновить стейт id карточки, которая передается при клике на иконку удаления
   function handleDeleteCardClick(cardId) {
     setIsDeleteCardPopupOpen(true)
@@ -155,10 +156,10 @@ function App() {
   const authorize = (jwt) => {
     return auth.getContent(jwt)
       .then((res) => {
-        if (res.data) {
+        if (res) {
           setLoggedIn(true);
-          setUserEmail(res.data.email);
-
+          setUserEmail(res.email);
+          
           history.push('/')
         }
       })
