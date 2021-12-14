@@ -1,0 +1,5 @@
+.user-panel__items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 5px 0 5px 0;
+}

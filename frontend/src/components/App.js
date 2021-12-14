@@ -19,14 +19,15 @@ import '../index.css';
 
 function App() {
   const [cards, setCards] = useState([])
-
   const [currentUser, setCurrentUser] = useState({})
+  const [users, setUsers] = useState([])
 
   function handleRequestAllData() {
     api.getAllNeededData() // возвращает результат исполнения нужных промисов (карточки и информации пользователя)
-      .then(([cards, userData]) => {
+      .then(([cards, userData, users]) => {
         setCurrentUser(userData)
         setCards(cards)
+        setUsers(users)
       })
       .catch((err) => console.log(err))
   }
@@ -229,8 +230,9 @@ function App() {
         
         <Switch>
           <ProtectedRoute 
+            path="/lenta"
             cards={cards}
-            exact path="/"
+            users={users}
             component={Main}
             loggedIn={loggedIn}
             onCardLike={handleCardLike}
@@ -238,7 +240,8 @@ function App() {
             onAddPlace={handleAddPlaceClick} 
             onEditAvatar={handleEditAvatarClick} 
             onEditProfile={handleEditProfileClick} 
-            onCardDeleteClick={handleDeleteCardClick} 
+            onCardDeleteClick={handleDeleteCardClick}
+             
           />
 
           <Route path="/sign-in">
@@ -251,7 +254,7 @@ function App() {
 
           <Route>
             {loggedIn ? (
-              <Redirect to="/" />
+              <Redirect to="/lenta" />
             ) : (
               <Redirect to="/sign-in" />
             )}

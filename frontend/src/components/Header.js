@@ -24,7 +24,7 @@ function Header({ userEmail, onSignOut, onMenuClick, isMenuClick, loggedIn }) {
 
   return (
     <header className={headerClassName}>
-      <Route exact path="/">
+      <Route path="/lenta">
         <div className="header__container">
           <img className="header__logo" src={logo} alt="логотип" />
           <button className={menuClassName} type="button" onClick={onMenuClick} />

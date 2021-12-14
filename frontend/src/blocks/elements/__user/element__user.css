@@ -1,0 +1,8 @@
+.element__user {
+  position: relative;
+  margin: 0;
+  background-color: #161616;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+}

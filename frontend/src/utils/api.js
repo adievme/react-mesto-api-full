@@ -17,6 +17,12 @@ class Api {
     }).then(this._checkResponse)
   }
 
+  getUsers() {
+    return fetch(`${this._baseUrl}users`, {
+      headers: this._headers
+    }).then(this._checkResponse)
+  }
+
   addCard(data) {
     return fetch(`${this._baseUrl}cards`, {
       method: 'POST',
@@ -77,7 +83,7 @@ class Api {
   }
 
   getAllNeededData() {
-    return Promise.all([this.getInitialCards(), this.getUserInfo()])
+    return Promise.all([this.getInitialCards(), this.getUserInfo(), this.getUsers()])
   }
 }
 
