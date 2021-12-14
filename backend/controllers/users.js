@@ -16,6 +16,7 @@ const createUser = (req, res, next) => {
     about,
     avatar,
   } = req.body;
+
   User.findOne({ email }).then((user) => {
     if (user) {
       throw new ConflictError('Такой email уже зарегистрирован');
@@ -81,10 +82,10 @@ const getUsers = (req, res, next) => {
 
 const getUser = (req, res, next) => {
   User.findById(req.params.id)
+    .orFail(() => {
+      throw new NotFoundError('Пользователь по указанному _id не найден');
+    })
     .then((user) => {
-      if (!user) {
-        throw new NotFoundError('Пользователь по указанному _id не найден');
-      }
       res.status(200).send(user);
     })
     .catch(next);

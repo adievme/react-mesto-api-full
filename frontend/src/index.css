@@ -17,14 +17,19 @@
 
 @import url(./blocks/profile/profile.css);
 @import url(./blocks/profile/__avatar-wrapper/profile__avatar-wrapper.css);
+@import url(./blocks/profile/__avatar-wrapper/_user-card/profile__avatar-wrapper_user-card.css);
 @import url(./blocks/profile/__avatar/profile__avatar.css);
+@import url(./blocks/profile/__avatar/_user-card/profile__avatar_user-card.css);
 @import url(./blocks/profile/__avatar-edit-button/profile__avatar-edit-button.css);
 @import url(./blocks/profile/__name/profile__name.css);
+@import url(./blocks/profile/__name/_user-card/profile__name_user-card.css);
 @import url(./blocks/profile/__job/profile__job.css);
 @import url(./blocks/profile/__info/profile__info.css);
+@import url(./blocks/profile/__info/_user-card/profile__info_user-card.css);
 @import url(./blocks/profile/__edit-button/profile__edit-button.css);
 @import url(./blocks/profile/__add-button/profile__add-button.css);
 @import url(./blocks/profile/__header/profile__header.css);
+@import url(./blocks/profile/__header/_user-card/profile__header_user-card.css);
 @import url(./blocks/profile/__info-edit/profile__info-edit.css);
 
 @import url(./blocks/user-panel/user-panel.css);

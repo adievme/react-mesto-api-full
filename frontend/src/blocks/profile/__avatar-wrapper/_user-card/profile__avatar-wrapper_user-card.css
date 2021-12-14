@@ -1,0 +1,9 @@
+.profile__avatar-wrapper_user-card {
+  margin-right: 15px;
+}
+
+@media screen and (max-width: 620px) {
+  .profile__avatar-wrapper_user-card {
+    margin: 0 auto 13px auto;
+  }
+}

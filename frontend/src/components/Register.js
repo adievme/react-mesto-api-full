@@ -17,7 +17,8 @@ function Register({ onRegister, infoTooltip }) {
 
     onRegister({ email, password })
       .then(res => {
-        if (!res.error) {
+        console.log(res)
+        if (!res.message) {
           infoTooltip({ 
             data: { text: 'Вы успешно зарегистрировались!', image: 'successfully' }, 
             isOpen: true
@@ -25,7 +26,7 @@ function Register({ onRegister, infoTooltip }) {
           history.push('/sign-in')
         } else {
           infoTooltip({
-            data: { text: res.error, image: 'error'}, 
+            data: { text: res.message, image: 'error'}, 
             isOpen: true
           })
         }
