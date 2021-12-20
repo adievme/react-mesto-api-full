@@ -22,8 +22,53 @@ function App() {
   const [currentUser, setCurrentUser] = useState({})
   const [users, setUsers] = useState([])
 
-  function handleRequestAllData() {
-    api.getAllNeededData() // возвращает результат исполнения нужных промисов (карточки и информации пользователя)
+  // Стейт авторизации пользователя
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [userEmail, setUserEmail] = useState('')
+
+  const history = useHistory();
+
+  const onLogin = ({ email, password }) => {
+    return auth.authorize(email, password)
+      .then((res) => {
+        // Если токен валидный, то сохраняем его в localStorage, вызываем ф-ю authorize для получения email и выполняем вход
+        if (res.token) {
+          localStorage.setItem('jwt', res.token);
+          authorize(res.token)
+          setLoggedIn(true);
+
+          history.push('/lenta')
+
+          return res
+        } else {
+          return res
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+  const authorize = (jwt) => {
+    return auth.getContent(jwt)
+      .then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          setUserEmail(res.email);
+          
+          history.push('/lenta')
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      authorize(jwt);
+    }
+  }, []);
+
+  const handleRequestAllData = () => {
+    return api.getAllNeededData() // возвращает результат исполнения нужных промисов (карточки и информации пользователя)
       .then(([cards, userData, users]) => {
         setCurrentUser(userData)
         setCards(cards)
@@ -35,6 +80,31 @@ function App() {
   useEffect(() => {
     handleRequestAllData()
   }, [])
+
+  
+
+  const onRegister = ({ email, password }) => {
+    return auth.register(email, password)
+      .then(res => res)
+      .catch(err => console.log(err));
+  };
+
+  // при нажатии на "выйти" удаляем токен из localStorage
+  function onSignOut() {
+    localStorage.removeItem('jwt')
+
+    setLoggedIn(false)
+    setUserEmail('')
+    setIsMenuClick(false)
+
+    history.push('/sign-in')
+  }
+
+  const [isMenuClick, setIsMenuClick] = useState(false)
+
+  function onMenuClick() {
+    !isMenuClick ? setIsMenuClick(true) : setIsMenuClick(false)
+  }
 
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
@@ -147,74 +217,6 @@ function App() {
     
     return () => document.removeEventListener('keydown', closeByEscape)
   }, [])
-
-  // Стейт авторизации пользователя
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [userEmail, setUserEmail] = useState('')
-
-  const history = useHistory();
-
-  const authorize = (jwt) => {
-    return auth.getContent(jwt)
-      .then((res) => {
-        if (res) {
-          setLoggedIn(true);
-          setUserEmail(res.email);
-          
-          history.push('/')
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      authorize(jwt);
-    }
-  }, []);
-  
-  const onLogin = ({ email, password }) => {
-    return auth.authorize(email, password)
-      .then((res) => {
-        // Если токен валидный, то сохраняем его в localStorage, вызываем ф-ю authorize для получения email и выполняем вход
-        if (res.token) {
-          localStorage.setItem('jwt', res.token);
-          authorize(res.token)
-          setLoggedIn(true);
-
-          history.push('/')
-
-          return res
-        } else {
-          return res
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  const onRegister = ({ email, password }) => {
-    return auth.register(email, password)
-      .then(res => res)
-      .catch(err => console.log(err));
-  };
-
-  // при нажатии на "выйти" удаляем токен из localStorage
-  function onSignOut() {
-    localStorage.removeItem('jwt')
-
-    setLoggedIn(false)
-    setUserEmail('')
-    setIsMenuClick(false)
-
-    history.push('/sign-in')
-  }
-
-  const [isMenuClick, setIsMenuClick] = useState(false)
-
-  function onMenuClick() {
-    !isMenuClick ? setIsMenuClick(true) : setIsMenuClick(false)
-  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

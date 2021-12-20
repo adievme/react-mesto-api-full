@@ -17,7 +17,6 @@ function Register({ onRegister, infoTooltip }) {
 
     onRegister({ email, password })
       .then(res => {
-        console.log(res)
         if (!res.message) {
           infoTooltip({ 
             data: { text: 'Вы успешно зарегистрировались!', image: 'successfully' }, 
