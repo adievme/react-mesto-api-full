@@ -11,15 +11,30 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`)
   }
 
-  getInitialCards() {
+  getInitialCards(token) {
     return fetch(`${this._baseUrl}cards`, {
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
     }).then(this._checkResponse)
   }
 
-  getUsers() {
+  getUsers(token) {
     return fetch(`${this._baseUrl}users`, {
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
+    }).then(this._checkResponse)
+  }
+
+  getUserInfo(token) {
+    return fetch(`${this._baseUrl}users/me`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
     }).then(this._checkResponse)
   }
 
@@ -31,12 +46,6 @@ class Api {
         name: data.name,
         link: data.link
       })
-    }).then(this._checkResponse)
-  }
-
-  getUserInfo() {
-    return fetch(`${this._baseUrl}users/me`, {
-      headers: this._headers,
     }).then(this._checkResponse)
   }
 
@@ -82,8 +91,8 @@ class Api {
     .then(this._checkResponse)
   }
 
-  getAllNeededData() {
-    return Promise.all([this.getInitialCards(), this.getUserInfo(), this.getUsers()])
+  getAllNeededData(token) {
+    return Promise.all([this.getInitialCards(token), this.getUserInfo(token), this.getUsers(token)])
   }
 }
 
@@ -91,7 +100,7 @@ const api = new Api({
   baseUrl: 'https://api.mesto.adievme.nomoredomains.rocks/',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.jwt}`,
+    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
   }
 }); 
 

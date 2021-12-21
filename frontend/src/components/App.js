@@ -60,15 +60,8 @@ function App() {
       .catch(err => console.log(err));
   };
 
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      authorize(jwt);
-    }
-  }, []);
-
-  const handleRequestAllData = () => {
-    return api.getAllNeededData() // возвращает результат исполнения нужных промисов (карточки и информации пользователя)
+  const handleRequestAllData = (jwt) => {
+    return api.getAllNeededData(jwt) // возвращает результат исполнения нужных промисов (карточки и информации пользователя)
       .then(([cards, userData, users]) => {
         setCurrentUser(userData)
         setCards(cards)
@@ -78,10 +71,12 @@ function App() {
   }
 
   useEffect(() => {
-    handleRequestAllData()
-  }, [])
-
-  
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      authorize(jwt);
+      handleRequestAllData(jwt)
+    }
+  }, [loggedIn]);
 
   const onRegister = ({ email, password }) => {
     return auth.register(email, password)
@@ -126,7 +121,7 @@ function App() {
   } 
 
   function handleUpdateUser(dataUser) {
-    api.setUserInfo(dataUser)
+    api.setUserData(dataUser)
       .then((res) => {
         setCurrentUser(res)
         closeAllPopups()
