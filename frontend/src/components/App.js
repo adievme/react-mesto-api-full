@@ -21,6 +21,7 @@ function App() {
   const [cards, setCards] = useState([])
   const [currentUser, setCurrentUser] = useState({})
   const [users, setUsers] = useState([])
+  const [token, setToken] = useState('')
 
   // Стейт авторизации пользователя
   const [loggedIn, setLoggedIn] = useState(false)
@@ -64,7 +65,7 @@ function App() {
     return api.getAllNeededData(jwt) // возвращает результат исполнения нужных промисов (карточки и информации пользователя)
       .then(([cards, userData, users]) => {
         setCurrentUser(userData)
-        setCards(cards)
+        setCards(cards.reverse())
         setUsers(users)
       })
       .catch((err) => console.log(err))
@@ -75,6 +76,7 @@ function App() {
     if (jwt) {
       authorize(jwt);
       handleRequestAllData(jwt)
+      setToken(jwt)
     }
   }, [loggedIn]);
 
@@ -91,10 +93,12 @@ function App() {
     setLoggedIn(false)
     setUserEmail('')
     setIsMenuClick(false)
+    setToken('')
+    console.log(token)
 
     history.push('/sign-in')
   }
-
+  
   const [isMenuClick, setIsMenuClick] = useState(false)
 
   function onMenuClick() {
@@ -106,13 +110,13 @@ function App() {
     const isLiked = card.likes.some(i => i === currentUser._id);
 
     if (!isLiked) {
-      api.like(card._id)
+      api.like(card._id, token)
         .then((newCard) => {
           setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
         })
         .catch(err => console.log(err));
     } else {
-      api.dislike(card._id)
+      api.dislike(card._id, token)
         .then((newCard) => {
           setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
         })
@@ -121,7 +125,7 @@ function App() {
   } 
 
   function handleUpdateUser(dataUser) {
-    api.setUserData(dataUser)
+    api.setUserInfo(dataUser, token)
       .then((res) => {
         setCurrentUser(res)
         closeAllPopups()
@@ -130,7 +134,7 @@ function App() {
   }
 
   function handleUpdateAvatar(avaLink) {
-    api.setUserAvatar(avaLink)
+    api.setUserAvatar(avaLink, token)
       .then((res) => {
         setCurrentUser(res)
         closeAllPopups()
@@ -139,7 +143,7 @@ function App() {
   }
 
   function handleAddPlaceSubmit(dataCard) {
-    return api.addCard(dataCard)
+    return api.addCard(dataCard, token)
       .then((newCard) => {
         setCards([newCard, ...cards])
         closeAllPopups()
@@ -182,7 +186,7 @@ function App() {
   }
 
   function handleCardDelete() {
-    api.deleteCard(cardId)
+    api.deleteCard(cardId, token)
       .then(() => {
         setCards(state => state.filter((card) => card._id !== cardId))
         closeAllPopups()

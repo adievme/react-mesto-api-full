@@ -38,10 +38,13 @@ class Api {
     }).then(this._checkResponse)
   }
 
-  addCard(data) {
+  addCard(data, token) {
     return fetch(`${this._baseUrl}cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -49,10 +52,14 @@ class Api {
     }).then(this._checkResponse)
   }
 
-  setUserInfo(data) {
+  setUserInfo(data, token) {
+  console.log(token)
     return fetch(`${this._baseUrl}users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -60,33 +67,45 @@ class Api {
     }).then(this._checkResponse)
   }
 
-  setUserAvatar(data) {
+  setUserAvatar(data, token) {
     return fetch(`${this._baseUrl}users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify({ avatar: data.avatar })
     }).then(this._checkResponse)
   }
 
-  deleteCard(id) {
+  deleteCard(id, token) {
     return fetch(`${this._baseUrl}cards/${id}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
     }).then(this._checkResponse)
   }
 
-  like(id) {
+  like(id, token) {
     return fetch(`${this._baseUrl}cards/${id}/likes`, {
       method: 'PUT',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
     })
     .then(this._checkResponse)
   }
 
-  dislike(id) {
+  dislike(id, token) {
     return fetch(`${this._baseUrl}cards/${id}/likes`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
     })
     .then(this._checkResponse)
   }
